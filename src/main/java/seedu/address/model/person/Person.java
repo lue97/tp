@@ -23,17 +23,19 @@ public class Person {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
+    private final Remark remark;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, remark, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
+        this.remark = remark;
     }
 
     public Name getName() {
@@ -70,7 +72,11 @@ public class Person {
         }
 
         return otherPerson != null
-                && otherPerson.getName().equals(getName());
+            && otherPerson.getName().equals(getName());
+    }
+
+    public Remark getRemark() {
+        return this.remark;
     }
 
     /**
@@ -89,28 +95,31 @@ public class Person {
 
         Person otherPerson = (Person) other;
         return otherPerson.getName().equals(getName())
-                && otherPerson.getPhone().equals(getPhone())
-                && otherPerson.getEmail().equals(getEmail())
-                && otherPerson.getAddress().equals(getAddress())
-                && otherPerson.getTags().equals(getTags());
+            && otherPerson.getPhone().equals(getPhone())
+            && otherPerson.getEmail().equals(getEmail())
+            && otherPerson.getAddress().equals(getAddress())
+            && otherPerson.getTags().equals(getTags())
+            && otherPerson.getRemark().equals(getRemark());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, remark, tags);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
-                .append("; Phone: ")
-                .append(getPhone())
-                .append("; Email: ")
-                .append(getEmail())
-                .append("; Address: ")
-                .append(getAddress());
+            .append("; Phone: ")
+            .append(getPhone())
+            .append("; Email: ")
+            .append(getEmail())
+            .append("; Address: ")
+            .append(getAddress())
+            .append("; Remark: ")
+            .append(getRemark());
 
         Set<Tag> tags = getTags();
         if (!tags.isEmpty()) {
