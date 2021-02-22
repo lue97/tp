@@ -2,6 +2,8 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Objects;
+
 /**
  * Represents a Person's name in the address book.
  * Guarantees: immutable
@@ -26,10 +28,17 @@ public class Remark {
     }
 
     @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-            || (other instanceof Name // instanceof handles nulls
-            && value.equals(((Remark) other).value)); // state check
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Remark remark = (Remark) o;
+
+        return Objects.equals(value, remark.value);
     }
 
     @Override

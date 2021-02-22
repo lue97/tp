@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -77,4 +78,22 @@ public class JsonAddressBookStorage implements AddressBookStorage {
         JsonUtil.saveJsonFile(new JsonSerializableAddressBook(addressBook), filePath);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        JsonAddressBookStorage that = (JsonAddressBookStorage) o;
+
+        return Objects.equals(filePath, that.filePath);
+    }
+
+    @Override
+    public int hashCode() {
+        return filePath != null ? filePath.hashCode() : 0;
+    }
 }
