@@ -97,6 +97,7 @@ public class ThemeManager implements Observable<String> {
         if (newCssCache != null) {
             this.cssCacheUri = getNewCssCacheUri(newTheme);
         }
+        updateAll();
     }
 
     public String getCssCacheUri() {

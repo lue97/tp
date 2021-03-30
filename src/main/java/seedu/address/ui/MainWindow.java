@@ -1,6 +1,5 @@
 package seedu.address.ui;
 
-import java.io.IOException;
 import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
@@ -81,8 +80,6 @@ public class MainWindow extends UiPart<Stage> implements Observer<String> {
         setAccelerators();
 
         helpWindow = new HelpWindow();
-
-        applyTheme();
     }
 
     public Scene getMainScene() {
@@ -184,26 +181,17 @@ public class MainWindow extends UiPart<Stage> implements Observer<String> {
      */
     @FXML
     private void handleExit() {
-        updateGuiSettings();
         helpWindow.hide();
         primaryStage.hide();
     }
 
-    @FXML
-    private void applyTheme() {
-        this.getMainScene().getStylesheets().clear();
-        this.getMainScene().getStylesheets().add("file:///" + ThemeManager.getCssCacheUri());
-    }
-
-    private void updateGuiSettings() {
-        GuiSettings guiSettings = new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-            (int) primaryStage.getX(), (int) primaryStage.getY(), ThemeManager.getThemePath());
-        logic.setGuiSettings(guiSettings);
-    }
-
     @Override
     public void update(String arg) {
-        
+        this.getMainScene().getStylesheets().clear();
+        this.getMainScene().getStylesheets().add("file:///" + arg);
+        GuiSettings guiSettings = new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
+            (int) primaryStage.getX(), (int) primaryStage.getY(), arg);
+        logic.setGuiSettings(guiSettings);
     }
 
     public PersonListPanel getPersonListPanel() {
@@ -223,16 +211,6 @@ public class MainWindow extends UiPart<Stage> implements Observer<String> {
 
             if (commandResult.isShowHelp()) {
                 handleHelp();
-            }
-
-            if (commandResult.isTheme()) {
-                applyTheme();
-                updateGuiSettings();
-                try {
-                    logic.saveFiles();
-                } catch (IOException ioException) {
-                    logger.warning("Unable to save theme");
-                }
             }
 
             if (commandResult.isExit()) {

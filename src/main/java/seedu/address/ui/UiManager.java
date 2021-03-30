@@ -9,13 +9,14 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.Observer;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 
 /**
  * The manager of the UI component.
  */
-public class UiManager implements Ui {
+public class UiManager implements Ui, Observer<String> {
 
     public static final String ALERT_DIALOG_PANE_FIELD_ID = "alertDialogPane";
 
@@ -25,12 +26,15 @@ public class UiManager implements Ui {
     private final Logic logic;
     private MainWindow mainWindow;
 
+    private String cssCache;
+
     /**
      * Creates a {@code UiManager} with the given {@code Logic}.
      */
-    public UiManager(Logic logic) {
+    public UiManager(Logic logic, String cssCache) {
         super();
         this.logic = logic;
+        this.cssCache = cssCache;
     }
 
     /**
@@ -40,7 +44,7 @@ public class UiManager implements Ui {
     private static void showAlertDialogAndWait(Stage owner, AlertType type, String title, String headerText,
                                                String contentText) {
         final Alert alert = new Alert(type);
-        alert.getDialogPane().getStylesheets().add("file:///" + ThemeManager.getCssCacheUri());
+        // alert.getDialogPane().getStylesheets().add("file:///" + cssCacheUri);
         alert.initOwner(owner);
         alert.setTitle(title);
         alert.setHeaderText(headerText);
@@ -86,4 +90,8 @@ public class UiManager implements Ui {
         System.exit(1);
     }
 
+    @Override
+    public void update(String arg) {
+        mainWindow.update(arg);
+    }
 }
