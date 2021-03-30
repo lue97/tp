@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.core.Observable;
-import seedu.address.commons.core.Observer;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.ui.exceptions.InvalidThemeException;
@@ -18,7 +16,7 @@ import seedu.address.ui.exceptions.InvalidThemeException;
 /**
  * Class for managing the theme of the application. Stores data on what theme is currently being applied.
  */
-public class ThemeManager implements Observable<String> {
+public class ThemeManager {
 
     /**
      * Template of the css used by the application.
@@ -27,7 +25,7 @@ public class ThemeManager implements Observable<String> {
 
     private static final Logger logger = LogsCenter.getLogger(ThemeManager.class);
 
-    private List<Observer<String>> observers;
+    private List<ThemeObsever> observers;
 
     /**
      * Current theme used by the application
@@ -152,15 +150,14 @@ public class ThemeManager implements Observable<String> {
         return temp.getAbsolutePath().replace(File.separator, "/");
     }
 
-    @Override
-    public void addObserver(Observer<String> observer) {
+    public void addObserver(ThemeObsever observer) {
         this.observers.add(observer);
     }
 
-    @Override
     public void updateAll() {
-        for (Observer<String> observer : this.observers) {
-            observer.update(this.getCssCacheUri());
+        for (ThemeObsever observer : this.observers) {
+            String[] args = new String[] {this.getThemePath(), this.getCssCacheUri()};
+            observer.update(args);
         }
     }
 }

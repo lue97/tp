@@ -9,7 +9,6 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.core.Observer;
 import seedu.address.commons.core.Version;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
@@ -29,6 +28,7 @@ import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
+import seedu.address.ui.ThemeObsever;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -68,7 +68,7 @@ public class MainApp extends Application {
 
         ui = new UiManager(logic, model.getThemeManager().getCssCacheUri());
 
-        model.getThemeManager().addObserver((Observer<String>) ui);
+        model.getThemeManager().addObserver((ThemeObsever) ui);
     }
 
     /**

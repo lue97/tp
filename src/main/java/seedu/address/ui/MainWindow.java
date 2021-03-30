@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
@@ -14,7 +15,6 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.DetailsPanelTab;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.core.Observer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -24,7 +24,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * The Main Window. Provides the basic application layout containing
  * a menu bar and space where other JavaFX elements can be placed.
  */
-public class MainWindow extends UiPart<Stage> implements Observer<String> {
+public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
 
@@ -185,12 +185,11 @@ public class MainWindow extends UiPart<Stage> implements Observer<String> {
         primaryStage.hide();
     }
 
-    @Override
-    public void update(String arg) {
+    public void updateTheme(String[] args) {
         this.getMainScene().getStylesheets().clear();
-        this.getMainScene().getStylesheets().add("file:///" + arg);
+        this.getMainScene().getStylesheets().add("file:///" + args[1]);
         GuiSettings guiSettings = new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-            (int) primaryStage.getX(), (int) primaryStage.getY(), arg);
+            (int) primaryStage.getX(), (int) primaryStage.getY(), args[0]);
         logic.setGuiSettings(guiSettings);
     }
 

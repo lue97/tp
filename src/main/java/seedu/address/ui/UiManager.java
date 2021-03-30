@@ -9,14 +9,13 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.core.Observer;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 
 /**
  * The manager of the UI component.
  */
-public class UiManager implements Ui, Observer<String> {
+public class UiManager implements Ui, ThemeObsever {
 
     public static final String ALERT_DIALOG_PANE_FIELD_ID = "alertDialogPane";
 
@@ -26,15 +25,12 @@ public class UiManager implements Ui, Observer<String> {
     private final Logic logic;
     private MainWindow mainWindow;
 
-    private String cssCache;
-
     /**
      * Creates a {@code UiManager} with the given {@code Logic}.
      */
     public UiManager(Logic logic, String cssCache) {
         super();
         this.logic = logic;
-        this.cssCache = cssCache;
     }
 
     /**
@@ -91,7 +87,7 @@ public class UiManager implements Ui, Observer<String> {
     }
 
     @Override
-    public void update(String arg) {
-        mainWindow.update(arg);
+    public void update(String[] args) {
+        mainWindow.updateTheme(args);
     }
 }
