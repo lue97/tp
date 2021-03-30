@@ -11,6 +11,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonEvent;
 import seedu.address.model.person.PersonStreak;
+import seedu.address.ui.ThemeManager;
 
 /**
  * The API of the Model component.
@@ -142,4 +143,9 @@ public interface Model {
      * Returns an unmodifiable view of contacts and their streaks
      */
     ObservableList<PersonStreak> getPersonStreaks();
+
+    /**
+     * Returns the ThemeManager of the model.
+     */
+    ThemeManager getThemeManager();
 }

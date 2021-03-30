@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.DetailsPanelTab;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.Observer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -24,7 +25,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * The Main Window. Provides the basic application layout containing
  * a menu bar and space where other JavaFX elements can be placed.
  */
-public class MainWindow extends UiPart<Stage> {
+public class MainWindow extends UiPart<Stage> implements Observer<String> {
 
     private static final String FXML = "MainWindow.fxml";
 
@@ -198,6 +199,11 @@ public class MainWindow extends UiPart<Stage> {
         GuiSettings guiSettings = new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
             (int) primaryStage.getX(), (int) primaryStage.getY(), ThemeManager.getThemePath());
         logic.setGuiSettings(guiSettings);
+    }
+
+    @Override
+    public void update(String arg) {
+        
     }
 
     public PersonListPanel getPersonListPanel() {

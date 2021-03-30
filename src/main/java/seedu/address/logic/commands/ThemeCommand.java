@@ -11,7 +11,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.ui.Theme;
 import seedu.address.ui.ThemeFactory;
-import seedu.address.ui.ThemeManager;
 import seedu.address.ui.exceptions.InvalidThemeException;
 
 public class ThemeCommand extends Command {
@@ -43,7 +42,7 @@ public class ThemeCommand extends Command {
         String feedback = String.format(MESSAGE_SUCCESS, this.themePathString);
         try {
             Theme theme = ThemeFactory.load(themePathString);
-            ThemeManager.setTheme(theme, this.themePathString);
+            model.getThemeManager().setTheme(theme, this.themePathString);
         } catch (DataConversionException | InvalidThemeException exception) {
             feedback = String.format(MESSAGE_INVALID_THEME, this.themePathString);
             throw new CommandException(feedback);

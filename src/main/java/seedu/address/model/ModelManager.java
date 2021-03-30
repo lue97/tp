@@ -18,6 +18,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonEvent;
 import seedu.address.model.person.PersonStreak;
+import seedu.address.ui.ThemeManager;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -32,6 +33,7 @@ public class ModelManager implements Model {
     private final ObservableList<PersonEvent> upcomingDates;
     private final ObservableList<Person> detailedPerson;
     private final ObservableList<PersonStreak> personStreaks;
+    private final ThemeManager themeManager;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -49,6 +51,7 @@ public class ModelManager implements Model {
         upcomingDates = this.addressBook.getUpcomingDates();
         detailedPerson = FXCollections.observableArrayList();
         personStreaks = this.addressBook.getPersonStreaks();
+        themeManager = new ThemeManager(this.getGuiSettings().getThemePath());
     }
 
     public ModelManager() {
@@ -223,5 +226,12 @@ public class ModelManager implements Model {
                 && userPrefs.equals(other.userPrefs)
                 && filteredPersons.equals(other.filteredPersons)
                 && groupMap.equals(other.groupMap);
+    }
+
+    //=========== Theme =============================================================
+
+    @Override
+    public ThemeManager getThemeManager() {
+        return themeManager;
     }
 }

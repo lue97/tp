@@ -28,12 +28,8 @@ import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
-import seedu.address.ui.Theme;
-import seedu.address.ui.ThemeFactory;
-import seedu.address.ui.ThemeManager;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
-import seedu.address.ui.exceptions.InvalidThemeException;
 
 /**
  * Runs the application.
@@ -70,31 +66,6 @@ public class MainApp extends Application {
         logic = new LogicManager(model, storage);
 
         ui = new UiManager(logic);
-
-        initTheme();
-    }
-
-    /**
-     * Initializes the content of ThemeManager with the theme in the GuiSetting of model.
-     */
-    private void initTheme() {
-        ThemeManager.init();
-        if (model.getGuiSettings().getThemePath() == null) {
-            logger.info("No theme specified. Applying default theme ...");
-            ThemeManager.setTheme(ThemeFactory.getDefaultTheme(), null);
-        } else {
-            logger.info("Loading theme " + model.getGuiSettings().getThemePath() + " ...");
-            try {
-                Theme theme = ThemeFactory.load(model.getGuiSettings().getThemePath());
-                ThemeManager.setTheme(theme, model.getGuiSettings().getThemePath());
-                return;
-            } catch (DataConversionException | InvalidThemeException exception) {
-                logger.warning("Invalid " + model.getGuiSettings().getThemePath() + " theme supplied");
-            } catch (IOException fileNotFoundException) {
-                logger.warning("Theme " + model.getGuiSettings().getThemePath() + " not found");
-            }
-            ThemeManager.setTheme(ThemeFactory.getDefaultTheme(), model.getGuiSettings().getThemePath());
-        }
     }
 
     /**

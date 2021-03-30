@@ -4,39 +4,75 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.Observable;
+import seedu.address.commons.core.Observer;
+import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
+import seedu.address.ui.exceptions.InvalidThemeException;
 
 /**
  * Class for managing the theme of the application. Stores data on what theme is currently being applied.
  */
-public class ThemeManager {
+public class ThemeManager implements Observable<String> {
 
     /**
      * Template of the css used by the application.
      */
     private static final String CSS_TEMPLATE = FileUtil.getResourceAsString("/view/Template.css");
 
+    private static final Logger logger = LogsCenter.getLogger(ThemeManager.class);
+
+    private List<Observer<String>> observers;
+
     /**
      * Current theme used by the application
      */
-    private static Theme theme = null;
+    private Theme theme;
+
     /**
      * Path of the current theme
      */
-    private static String themePath = null;
+    private String themePath;
+
     /**
      * Path of the css file currently in use
      */
-    private static String cssCacheUri = null;
+    private String cssCacheUri;
+
+    /**
+     * Constructs a new themeManager.
+     */
+    public ThemeManager(String themePath) {
+        this.observers = new ArrayList<>();
+        this.theme = ThemeFactory.getDefaultTheme();
+        this.cssCacheUri = getNewCssCacheUri(this.theme);
+        if (themePath == null) {
+            this.setTheme(ThemeFactory.getDefaultTheme(), null);
+        } else {
+            try {
+                Theme theme = ThemeFactory.load(themePath);
+                setTheme(theme, themePath);
+            } catch (DataConversionException | InvalidThemeException exception) {
+                logger.warning("Invalid " + themePath + " theme supplied");
+            } catch (IOException fileNotFoundException) {
+                logger.warning("Theme " + themePath + " not found");
+            }
+            this.setTheme(ThemeFactory.getDefaultTheme(), themePath);
+        }
+    }
 
     /**
      * Gets the theme currently in use by the application.
      *
      * @return The theme currently in use by the application.
      */
-    public static Theme getTheme() {
-        return ThemeManager.theme;
+    public Theme getTheme() {
+        return this.theme;
     }
 
     /**
@@ -44,16 +80,8 @@ public class ThemeManager {
      *
      * @return Path of the JSON theme file currently being applied.
      */
-    public static String getThemePath() {
-        return themePath;
-    }
-
-    /**
-     * Initialized the variables in ThemeManager.
-     */
-    public static void init() {
-        ThemeManager.theme = ThemeFactory.getDefaultTheme();
-        ThemeManager.cssCacheUri = getNewCssCacheUri(ThemeManager.theme);
+    public String getThemePath() {
+        return this.themePath;
     }
 
     /**
@@ -62,17 +90,17 @@ public class ThemeManager {
      * @param newTheme  The new theme to be used.
      * @param themePath The path of the new theme to be used.
      */
-    public static void setTheme(Theme newTheme, String themePath) {
-        ThemeManager.theme = newTheme;
-        ThemeManager.themePath = themePath;
+    public void setTheme(Theme newTheme, String themePath) {
+        this.theme = newTheme;
+        this.themePath = themePath;
         String newCssCache = getNewCssCacheUri(newTheme);
         if (newCssCache != null) {
-            ThemeManager.cssCacheUri = getNewCssCacheUri(newTheme);
+            this.cssCacheUri = getNewCssCacheUri(newTheme);
         }
     }
 
-    public static String getCssCacheUri() {
-        return ThemeManager.cssCacheUri;
+    public String getCssCacheUri() {
+        return this.cssCacheUri;
     }
 
     /**
@@ -123,4 +151,15 @@ public class ThemeManager {
         return temp.getAbsolutePath().replace(File.separator, "/");
     }
 
+    @Override
+    public void addObserver(Observer<String> observer) {
+        this.observers.add(observer);
+    }
+
+    @Override
+    public void updateAll() {
+        for (Observer<String> observer : this.observers) {
+            observer.update(this.getCssCacheUri());
+        }
+    }
 }
