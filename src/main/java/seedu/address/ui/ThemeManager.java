@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.Observer;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.ui.exceptions.InvalidThemeException;
@@ -16,7 +17,7 @@ import seedu.address.ui.exceptions.InvalidThemeException;
 /**
  * Class for managing the theme of the application. Stores data on what theme is currently being applied.
  */
-public class ThemeManager {
+public class ThemeManager implements ThemeObservable {
 
     /**
      * Template of the css used by the application.
@@ -25,7 +26,9 @@ public class ThemeManager {
 
     private static final Logger logger = LogsCenter.getLogger(ThemeManager.class);
 
-    private List<ThemeObsever> observers;
+    private List<ThemeObserver> observers;
+
+    private boolean uiIsReady;
 
     /**
      * Current theme used by the application
@@ -46,6 +49,7 @@ public class ThemeManager {
      * Constructs a new themeManager.
      */
     public ThemeManager(String themePath) {
+        this.uiIsReady = false;
         this.observers = new ArrayList<>();
         this.theme = ThemeFactory.getDefaultTheme();
         this.cssCacheUri = getNewCssCacheUri(this.theme);
@@ -57,10 +61,11 @@ public class ThemeManager {
                 setTheme(theme, themePath);
             } catch (DataConversionException | InvalidThemeException exception) {
                 logger.warning("Invalid " + themePath + " theme supplied");
+                this.setTheme(ThemeFactory.getDefaultTheme(), themePath);
             } catch (IOException fileNotFoundException) {
                 logger.warning("Theme " + themePath + " not found");
+                this.setTheme(ThemeFactory.getDefaultTheme(), themePath);
             }
-            this.setTheme(ThemeFactory.getDefaultTheme(), themePath);
         }
     }
 
@@ -150,12 +155,16 @@ public class ThemeManager {
         return temp.getAbsolutePath().replace(File.separator, "/");
     }
 
-    public void addObserver(ThemeObsever observer) {
-        this.observers.add(observer);
+    @Override
+    public void addObserver(Observer<String[]> observer) {
+        this.observers.add((ThemeObserver) observer);
     }
 
+    /**
+     * Updates all Observers subscribed to this object.
+     */
     public void updateAll() {
-        for (ThemeObsever observer : this.observers) {
+        for (ThemeObserver observer : this.observers) {
             String[] args = new String[] {this.getThemePath(), this.getCssCacheUri()};
             observer.update(args);
         }

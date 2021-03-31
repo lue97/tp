@@ -27,6 +27,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonEvent;
 import seedu.address.model.person.PersonStreak;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.ui.ThemeManager;
 
 public class AddCommandTest {
 
@@ -200,6 +201,11 @@ public class AddCommandTest {
 
         @Override
         public ObservableList<PersonStreak> getPersonStreaks() {
+            throw new AssertionError("This method should not be called");
+        }
+
+        @Override
+        public ThemeManager getThemeManager() {
             throw new AssertionError("This method should not be called");
         }
     }

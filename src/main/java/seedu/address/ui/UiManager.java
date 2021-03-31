@@ -15,7 +15,7 @@ import seedu.address.logic.Logic;
 /**
  * The manager of the UI component.
  */
-public class UiManager implements Ui, ThemeObsever {
+public class UiManager implements Ui, ThemeObserver {
 
     public static final String ALERT_DIALOG_PANE_FIELD_ID = "alertDialogPane";
 
@@ -24,6 +24,7 @@ public class UiManager implements Ui, ThemeObsever {
 
     private final Logic logic;
     private MainWindow mainWindow;
+    private String cssCacheUri;
 
     /**
      * Creates a {@code UiManager} with the given {@code Logic}.
@@ -31,6 +32,7 @@ public class UiManager implements Ui, ThemeObsever {
     public UiManager(Logic logic, String cssCache) {
         super();
         this.logic = logic;
+        this.cssCacheUri = cssCache;
     }
 
     /**
@@ -69,6 +71,8 @@ public class UiManager implements Ui, ThemeObsever {
             logger.severe(StringUtil.getDetails(e));
             showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
         }
+        mainWindow.getMainScene().getStylesheets().clear();
+        mainWindow.getMainScene().getStylesheets().add("file:///" + this.cssCacheUri);
     }
 
     private Image getImage(String imagePath) {

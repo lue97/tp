@@ -1,6 +1,5 @@
 package seedu.address.ui;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
@@ -185,6 +184,11 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.hide();
     }
 
+    /**
+     * Updates the UI of the application.
+     * @param args the first argument will be the JSON file containing the theme, whereas the second argument
+     *             is the location of the css cache.
+     */
     public void updateTheme(String[] args) {
         this.getMainScene().getStylesheets().clear();
         this.getMainScene().getStylesheets().add("file:///" + args[1]);

@@ -28,7 +28,7 @@ import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
-import seedu.address.ui.ThemeObsever;
+import seedu.address.ui.ThemeObserver;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -68,7 +68,7 @@ public class MainApp extends Application {
 
         ui = new UiManager(logic, model.getThemeManager().getCssCacheUri());
 
-        model.getThemeManager().addObserver((ThemeObsever) ui);
+        model.getThemeManager().addObserver((ThemeObserver) ui);
     }
 
     /**
