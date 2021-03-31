@@ -103,8 +103,6 @@ public class ModelManagerTest {
         // same values -> returns true
         modelManager = new ModelManager(addressBook, userPrefs);
         ModelManager modelManagerCopy = new ModelManager(addressBook, userPrefs);
-        System.out.println(modelManager.getThemeManager().toString());
-        System.out.println(modelManagerCopy.getThemeManager().toString());
         assertTrue(modelManager.equals(modelManagerCopy));
 
         // same object -> returns true

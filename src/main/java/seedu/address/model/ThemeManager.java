@@ -1,4 +1,4 @@
-package seedu.address.ui;
+package seedu.address.model;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,6 +13,8 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Observer;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
+import seedu.address.ui.Theme;
+import seedu.address.ui.ThemeFactory;
 import seedu.address.ui.exceptions.InvalidThemeException;
 
 /**

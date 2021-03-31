@@ -1,4 +1,4 @@
-package seedu.address.ui;
+package seedu.address.model;
 
 import seedu.address.commons.core.Observable;
 

@@ -27,7 +27,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonEvent;
 import seedu.address.model.person.PersonStreak;
 import seedu.address.testutil.PersonBuilder;
-import seedu.address.ui.ThemeManager;
+import seedu.address.model.ThemeManager;
 
 public class AddCommandTest {
 
