@@ -82,6 +82,7 @@ public class GuiSettings implements Serializable {
         sb.append("Width : " + windowWidth + "\n");
         sb.append("Height : " + windowHeight + "\n");
         sb.append("Position : " + windowCoordinates);
+        sb.append("Theme Path : " + themePath);
         return sb.toString();
     }
 }

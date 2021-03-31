@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
@@ -28,8 +29,6 @@ public class ThemeManager implements ThemeObservable {
 
     private List<ThemeObserver> observers;
 
-    private boolean uiIsReady;
-
     /**
      * Current theme used by the application
      */
@@ -49,7 +48,6 @@ public class ThemeManager implements ThemeObservable {
      * Constructs a new themeManager.
      */
     public ThemeManager(String themePath) {
-        this.uiIsReady = false;
         this.observers = new ArrayList<>();
         this.theme = ThemeFactory.getDefaultTheme();
         this.cssCacheUri = getNewCssCacheUri(this.theme);
@@ -168,5 +166,43 @@ public class ThemeManager implements ThemeObservable {
             String[] args = new String[] {this.getThemePath(), this.getCssCacheUri()};
             observer.update(args);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        ThemeManager t = (ThemeManager) o;
+        if (!Objects.equals(theme, t.theme)) {
+            return false;
+        }
+        if (!Objects.equals(themePath, t.themePath)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = observers != null ? observers.hashCode() : 0;
+        result = 31 * result + (theme != null ? theme.hashCode() : 0);
+        result = 31 * result + (themePath != null ? themePath.hashCode() : 0);
+        result = 31 * result + (cssCacheUri != null ? cssCacheUri.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "ThemeManager{"
+                + "observers=" + observers
+                + ", theme=" + theme
+                + ", themePath='" + themePath + '\''
+                + ", cssCacheUri='" + cssCacheUri + '\''
+                + '}';
     }
 }

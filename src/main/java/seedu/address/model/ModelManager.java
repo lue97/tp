@@ -225,7 +225,8 @@ public class ModelManager implements Model {
         return addressBook.equals(other.addressBook)
                 && userPrefs.equals(other.userPrefs)
                 && filteredPersons.equals(other.filteredPersons)
-                && groupMap.equals(other.groupMap);
+                && groupMap.equals(other.groupMap)
+                && themeManager.equals(other.themeManager);
     }
 
     //=========== Theme =============================================================
