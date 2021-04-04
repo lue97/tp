@@ -16,7 +16,9 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteDateCommand;
+import seedu.address.logic.commands.DeleteGroupCommand;
 import seedu.address.logic.commands.DeleteMeetingCommand;
+import seedu.address.logic.commands.DeletePictureCommand;
 import seedu.address.logic.commands.DetailsCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -91,7 +93,10 @@ public class InputParser {
             return new ThemeCommandParser().parse(arguments);
 
         case AddGroupCommand.COMMAND_WORD:
-            return new AddGroupParser().parse(arguments);
+            return new AddGroupCommandParser().parse(arguments);
+
+        case DeleteGroupCommand.COMMAND_WORD:
+            return new DeleteGroupCommandParser().parse(arguments);
 
         case AddMeetingCommand.COMMAND_WORD:
             return new AddMeetingCommandParser().parse(arguments);
@@ -101,6 +106,9 @@ public class InputParser {
 
         case AddPictureCommand.COMMAND_WORD:
             return new AddPictureCommandParser().parse(arguments);
+
+        case DeletePictureCommand.COMMAND_WORD:
+            return new DeletePictureCommandParser().parse(arguments);
 
         case SetGoalCommand.COMMAND_WORD:
             return new SetGoalCommandParser().parse(arguments);
