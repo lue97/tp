@@ -50,7 +50,7 @@ public class ModelManager implements Model {
         upcomingDates = this.addressBook.getUpcomingDates();
         detailedPerson = FXCollections.observableArrayList();
         personStreaks = this.addressBook.getPersonStreaks();
-        themeManager = new ThemeManager(this.getGuiSettings().getThemePath());
+        themeManager = new ThemeManager(userPrefs.getGuiSettings().getThemePath());
     }
 
     public ModelManager() {
