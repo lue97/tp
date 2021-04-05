@@ -78,7 +78,7 @@ public class ThemeFactory {
     private static Theme loadFromResource(String themeResource) throws IOException {
         URL u = MainApp.class.getResource(themeResource);
         if (u == null) {
-            throw new FileNotFoundException("Default theme" + themeResource + "not found");
+            throw new FileNotFoundException("Default theme " + themeResource + " not found");
         }
         return JsonUtil.fromJsonString(FileUtil.getResourceAsString(themeResource), Theme.class);
     }

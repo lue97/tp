@@ -43,6 +43,12 @@ public class ThemeFactoryTest {
     }
 
     @Test
+    public void themeFactory_loadResource_success() {
+        Theme t = assertDoesNotThrow(() -> ThemeFactory.load("@monokai"));
+        assertEquals(ThemeFactory.getDefaultTheme(), t);
+    }
+
+    @Test
     void themeFactory_loadInvalidTheme_failure() {
         assertThrows(FileNotFoundException.class, () -> ThemeFactory.load(NOT_EXIST_PATH),
                 new FileNotFoundException().toString());

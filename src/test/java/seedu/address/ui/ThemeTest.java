@@ -43,6 +43,7 @@ public class ThemeTest {
     public void theme_equalTheme_success() {
         assertEquals(t1, t1);
         assertEquals(t1, t2);
+        assertEquals(new Theme(), new Theme("", "", null));
     }
 
     @Test
