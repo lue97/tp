@@ -6,12 +6,9 @@ import org.junit.jupiter.api.Test;
 
 public class ThemeManagerTest {
 
-    static {
-        ThemeManager.init();
-    }
-
     @Test
     public void themeManager_getTheme_success() {
+        ThemeManager.init();
         assertEquals(ThemeFactory.getDefaultTheme(), ThemeManager.getTheme());
     }
 
