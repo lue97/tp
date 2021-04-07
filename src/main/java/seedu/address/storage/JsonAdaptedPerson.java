@@ -152,7 +152,7 @@ class JsonAdaptedPerson {
         }
         final Birthday modelBirthday = new Birthday(birthday);
 
-        if (!Goal.isValidGoal(goal)) {
+        if (goal == null || !Goal.isValidGoal(goal)) {
             throw new IllegalValueException(Goal.MESSAGE_CONSTRAINTS);
         }
         final Goal modelGoal = new Goal(Goal.parseFrequency(goal.toLowerCase(Locale.ROOT)));
@@ -193,7 +193,6 @@ class JsonAdaptedPerson {
                 throw new IllegalValueException(
                         errorMsgForEventBeforeBirthday(modelName, dateModel, "Special Date"));
             }
-
             modelDates.add(dateModel);
         }
 
