@@ -186,6 +186,19 @@ A negative amount of debt would mean that you owe your friend the specified amou
 
 Whenever a friend is added, the debt is automatically 0. The range of this debt is from -999,999,999,999 to 999,999,999,999.
 
+### Email
+
+Your friend's email so you can email them important stuff.
+
+A valid email is in the format `local-part@labels`.
+* `local-part` can contain any characters provided that they are either:
+    * Alphanumeric (A-Z, a-z, 0-9), or
+    * Any characters from the set (``.!#$%&'*+\/=?^_`{|}~-``) (excluding parentheses). <br>
+This is then followed by a `@` character, and then one or more `label`.
+* A `label` should be shorter than 64 characters, and only contains alphanumeric characters (A-Z, a-z, 0-9).
+* Multiple `label`s are allowed, provided that they are delimited by a single period. <br>
+  Note that email does NOT conform to [RFC](https://tools.ietf.org/html/rfc5322) standards.
+
 ### Special Dates
 
 Special Dates that you would like to be reminded of yearly so that you can celebrate them whenever the date draws near.
@@ -676,17 +689,6 @@ If the previous theme file supplied is not found or unreadable, then the default
 
 **Q**: Where can I find more themes?<br>
 **A**: Certain online tools such as [terminal.sexy](https://terminal.sexy) can be used to generate the required `json` file.
-
-**Q**: What is a valid email format?<br>
-**A**: The email allowed in FriendDex shall adhere to the following rules:
-* Emails shall have the format `local-part@labels`.
-* `local-part` local-part can contain any characters provided that they are either
-    * Alphanumeric (A - Z, a - z, 0 - 9), or
-    * Any character from the set <code>.!#$%&'*+\/=?^_`{|}~-</code>
-* This is followed by a `@` and then one or more `label`.
-* A `label` should be shorter than 64 characters.
-* Multiple `label`s are allowed, provided that they are delimited by a single period. <br>
-Note that email does NOT conform to [RFC](https://tools.ietf.org/html/rfc5322) standards.
 
 --------------------------------------------------------------------------------------------------------------------
 
